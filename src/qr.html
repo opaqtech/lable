@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+    <!-- Add a reference to the QR code library -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/qrcode.min.js"></script>
+    <style>
+        /* Some basic styling for the page */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding-top: 50px;
+        }
+        #qr-code {
+            max-width: 80%;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>QR Code Generator</h1>
+    <input type="text" id="urlInput" placeholder="Enter URL">
+    <button onclick="generateQR()">Generate QR Code</button>
+    <div id="qr-code"></div>
+    <a id="downloadLink" download="qrcode.png" style="display: none;">Download QR Code</a>
+
+    <script>
+        // JavaScript code to generate QR code
+        function generateQR() {
+            // Get the URL from the input field
+            var url = document.getElementById('urlInput').value;
+
+            // Generate QR code using the QR code library
+            var qrCodeDiv = document.getElementById('qr-code');
+            qrCodeDiv.innerHTML = ''; // Clear previous QR code (if any)
+            var qrCode = new QRCode(qrCodeDiv, url);
+
+            // Convert the QR code to a data URL
+            var qrCodeDataURL = qrCodeDiv.querySelector('canvas').toDataURL();
+
+            // Update the download link with the data URL
+            var downloadLink = document.getElementById('downloadLink');
+            downloadLink.href = qrCodeDataURL;
+            downloadLink.style.display = 'block'; // Make the download link visible
+        }
+    </script>
+</body>
+</html>
